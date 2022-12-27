@@ -1,0 +1,78 @@
+import numpy as np
+import pickle
+import streamlit as st
+
+
+# loading the saved model
+loaded_model = pickle.load(open('C:/Users/spoorthy/Documents/Excelr/Project/fmodel.sav', 'rb'))
+
+
+# creating a function for Prediction
+
+def Telecom_Churn_prediction(input_data):
+    
+
+    # changing the input_data to numpy array
+    input_data_as_numpy_array = np.asarray(input_data)
+
+    # reshape the array as we are predicting for one instance
+    input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
+
+    prediction = loaded_model.predict(input_data_reshaped)
+    print(prediction)
+
+    if (prediction[0] == 0):
+      return 'The customer is not Churned'
+    else:
+      return 'The customer is Churned'
+  
+    
+  
+def main():
+    
+    
+    # giving a title
+    st.title('Telecom Churn Prediction Web App')
+    
+    
+    # getting the input data from the user
+    
+    
+    account.length  = st.text_input('Account length')
+    voice.plan = st.text_input('Voice plan')
+    voice.messages  = st.text_input('Voice messages')
+    intl.plan = st.text_input('International plan')
+    intl.mins = st.text_input('International mins')
+    intl.calls = st.text_input('International calls')
+    intl.charge = st.text_input('International charge')
+    day.mins = st.text_input('Day mins')
+    day.calls = st.text_input('Day calls')
+    day.charge = st.text_input('Day charge')
+    eve.mins = st.text_input('Evening mins')
+    eve.calls = st.text_input('Evening calls')
+    eve.charge = st.text_input('Evening charge')
+    night.mins = st.text_input('Night mins')
+    night.calls = st.text_input('Night calls')
+    night.charge = st.text_input('Night charge')
+    customer.calls = st.text_input('Customer calls')
+    
+    
+    # code for Prediction
+    churned = ''
+    
+    # creating a button for Prediction
+    
+    if st.button('Customer churn Result'):
+        churned = Telecom_Churn_prediction([account.length, voice.plan, voice.messages, intl.plan, intl.mins, intl.calls, intl.charge, day.mins,
+                                     day.calls, day.charge, eve.mins, eve.calls, eve.charge, night.mins, night.calls,
+                                     night.charge, customer.calls])
+        
+        
+    st.success(churned)
+    
+    
+    
+    
+    
+if __name__ == '__main__':
+    main()
